@@ -55,6 +55,27 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User updateUserByUserName(String userName, User user) throws Exception {
+        User updatedUser = getUserByUserName(userName);
+        updatedUser.setFirstName(user.getFirstName());
+        updatedUser.setLastName(user.getLastName());
+        updatedUser.setAbout(user.getAbout());
+
+        User userWithGivenEmail = this.userRepository.findUserByEmail(user.getEmail());
+
+        // if a user with the provided email already exists and is a different user
+        if(userWithGivenEmail != null && userWithGivenEmail.getId() != updatedUser.getId()){
+            System.out.println("Email already in use !!");
+            throw new Exception("Email already connected with a different user");
+        }
+        updatedUser.setEmail(user.getEmail());
+        updatedUser.setPhone(user.getPhone());
+        updatedUser.setProfileImage(user.getProfileImage());
+
+        return this.userRepository.save(updatedUser);
+    }
+
+    @Override
     public void deleteUserByUserName(String userName) {
         User user = this.userRepository.findUserByUserName(userName);
         this.deleteUserByUserId(user.getId());

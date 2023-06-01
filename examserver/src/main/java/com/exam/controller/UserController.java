@@ -34,18 +34,31 @@ public class UserController {
         return this.userService.createUser(user, userRoles);
     }
 
-    @GetMapping("/{username}")
-    public User getUser(@PathVariable("username") String userName){
+    @GetMapping("/{userName}")
+    public User getUserByUserName(@PathVariable("userName") String userName){
         return this.userService.getUserByUserName(userName);
     }
 
     @DeleteMapping("/{userName}")
     public void deleteUserByUserName(@PathVariable("userName") String userName){
         this.userService.deleteUserByUserName(userName);
+
     }
 
 //    @DeleteMapping("/{userId}")
 //    public void deleteUserByUserId(@PathVariable("userId") Long userId){
 //        this.userService.deleteUserByUserId(userId);
 //    }
+
+    @PutMapping("/{userName}")
+    public User updateUserByUserName(@PathVariable("userName") String userName,
+                                     @RequestBody User user) throws Exception {
+        return this.userService.updateUserByUserName(userName, user);
+    }
+
+    // TODO update password
+
+    // TODO deactivate user
+
+    
 }
