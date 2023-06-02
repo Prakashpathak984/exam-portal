@@ -88,16 +88,30 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User deactivateUserByUserName(String userName) {
+    public User deactivateUserByUserName(String userName) throws Exception {
         User updatedUser = getUserByUserName(userName);
-        updatedUser.setEnabled(false);
+        // check if the user is activated, if not raise an exception
+        if (updatedUser.isEnabled()){
+            updatedUser.setEnabled(false);
+        }
+        else{
+            System.out.println("User already de-activated !");
+            throw new Exception("User is already de-activated");
+        }
         return this.userRepository.save(updatedUser);
     }
 
     @Override
-    public User activateUserByUserName(String userName) {
+    public User activateUserByUserName(String userName) throws Exception {
         User updatedUser = getUserByUserName(userName);
-        updatedUser.setEnabled(true);
+        // check if the user is deactivated, if not raise an exception
+        if ( ! updatedUser.isEnabled()) {
+            updatedUser.setEnabled(true);
+        }
+        else {
+            System.out.println("User already activated !");
+            throw new Exception("User is already activated");
+        }
         return this.userRepository.save(updatedUser);
     }
 
