@@ -76,6 +76,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User updatePasswordByUserName(String userName, String password) throws Exception {
+        User updatedUser = getUserByUserName(userName);
+
+        if (updatedUser.getPassword().equals(password)) {
+            System.out.println("Password same as current password !");
+            throw new Exception("New password is same as current password !");
+        }
+        updatedUser.setPassword(password);
+        return this.userRepository.save(updatedUser);
+    }
+
+    @Override
     public void deleteUserByUserName(String userName) {
         User user = this.userRepository.findUserByUserName(userName);
         this.deleteUserByUserId(user.getId());

@@ -16,4 +16,6 @@ public interface UserService {
     public void deleteUserByUserId(Long userId);
 
     User updateUserByUserName(String userName, User user) throws Exception;
+
+    User updatePasswordByUserName(String userName, String password) throws Exception;
 }

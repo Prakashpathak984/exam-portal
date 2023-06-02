@@ -57,8 +57,13 @@ public class UserController {
     }
 
     // TODO update password
+    @PutMapping("/update-password/{userName}")
+    public User updatePasswordByUserName(@PathVariable("userName") String userName,
+                                         @RequestBody String password) throws Exception {
+        return this.userService.updatePasswordByUserName(userName, password);
+    }
 
     // TODO deactivate user
 
-    
+
 }
