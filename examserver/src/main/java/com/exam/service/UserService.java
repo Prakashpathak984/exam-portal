@@ -18,4 +18,6 @@ public interface UserService {
     User updateUserByUserName(String userName, User user) throws Exception;
 
     User updatePasswordByUserName(String userName, String password) throws Exception;
+
+    User deactivateUserByUserName(String userName);
 }

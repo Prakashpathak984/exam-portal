@@ -88,6 +88,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User deactivateUserByUserName(String userName) {
+        User updatedUser = getUserByUserName(userName);
+        updatedUser.setEnabled(false);
+        return this.userRepository.save(updatedUser);
+    }
+
+    @Override
     public void deleteUserByUserName(String userName) {
         User user = this.userRepository.findUserByUserName(userName);
         this.deleteUserByUserId(user.getId());

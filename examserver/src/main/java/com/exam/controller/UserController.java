@@ -64,6 +64,10 @@ public class UserController {
     }
 
     // TODO deactivate user
+    @PutMapping("/deactivate-user/{userName}")
+    public User deactivateUserByUserName(@PathVariable("userName") String userName) {
+        return this.userService.deactivateUserByUserName(userName);
+    }
 
 
 }
