@@ -95,6 +95,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User activateUserByUserName(String userName) {
+        User updatedUser = getUserByUserName(userName);
+        updatedUser.setEnabled(true);
+        return this.userRepository.save(updatedUser);
+    }
+
+    @Override
     public void deleteUserByUserName(String userName) {
         User user = this.userRepository.findUserByUserName(userName);
         this.deleteUserByUserId(user.getId());
