@@ -55,8 +55,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void deleteUserByUserName(String userName) {
+        User user = this.userRepository.findUserByUserName(userName);
+        this.deleteUserByUserId(user.getId());
+    }
+
+    @Override
     public User updateUserByUserName(String userName, User user) throws Exception {
         User updatedUser = getUserByUserName(userName);
+        if ( ! updatedUser.isEnabled()) {
+            System.out.println("User account deactivated !");
+            throw new Exception("User account is not active !");
+        }
         updatedUser.setFirstName(user.getFirstName());
         updatedUser.setLastName(user.getLastName());
         updatedUser.setAbout(user.getAbout());
@@ -78,7 +88,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public User updatePasswordByUserName(String userName, String password) throws Exception {
         User updatedUser = getUserByUserName(userName);
-
+        if ( ! updatedUser.isEnabled()) {
+            System.out.println("User account deactivated !");
+            throw new Exception("User account is not active !");
+        }
         if (updatedUser.getPassword().equals(password)) {
             System.out.println("Password same as current password !");
             throw new Exception("New password is same as current password !");
@@ -114,12 +127,5 @@ public class UserServiceImpl implements UserService {
         }
         return this.userRepository.save(updatedUser);
     }
-
-    @Override
-    public void deleteUserByUserName(String userName) {
-        User user = this.userRepository.findUserByUserName(userName);
-        this.deleteUserByUserId(user.getId());
-    }
-
 
 }
