@@ -74,7 +74,7 @@ public class UserServiceImpl implements UserService {
         User userWithGivenEmail = this.userRepository.findUserByEmail(user.getEmail());
 
         // if a user with the provided email already exists and is a different user
-        if(userWithGivenEmail != null && userWithGivenEmail.getId() != updatedUser.getId()){
+        if(userWithGivenEmail != null && ! userWithGivenEmail.getId().equals(updatedUser.getId()) ){
             System.out.println("Email already in use !!");
             throw new Exception("Email already connected with a different user");
         }
